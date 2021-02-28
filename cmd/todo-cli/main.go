@@ -17,8 +17,8 @@ func main() {
 
 	g.SetManagerFunc(layout)
 
-	// quit
-	if err := g.SetKeybinding("", gocui.KeyCtrlC, gocui.ModNone, quit); err != nil {
+	err = keybindings(g)
+	if err != nil {
 		log.Fatalln(err)
 	}
 
@@ -44,24 +44,45 @@ func layout(g *gocui.Gui) error {
 		fmt.Fprint(v, "GO TODO CLI APP\nv.0.0.1")
 	}
 
-	if v, err := g.SetView("Menu", 0, maxY/9+1, maxX/5, maxY/3); err != nil {
+	if v, err := g.SetView("menu", 0, maxY/9+1, maxX/5, maxY/3); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
 
 		v.Title = "Menu"
-		v.Wrap = true
-		fmt.Fprintln(v, "Add Todo")
-		fmt.Fprintln(v, "Delete Todo")
+		v.Highlight = true
+		v.SelBgColor = gocui.ColorGreen
+		v.SelFgColor = gocui.ColorBlack
+		fmt.Fprintln(v, "[1] Add Todo")
+		fmt.Fprintln(v, "[2] Complete Todo")
+		fmt.Fprintln(v, "[3] Delete Todo")
 	}
 
-	if v, err := g.SetView("TODOs", maxX/5+1, maxY/9+1, maxX-1, maxY-1); err != nil {
+	if v, err := g.SetView("todos", maxX/5+1, maxY/9+1, maxX-20, maxY-1); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
 
 		v.Title = "TODOs"
 		v.Wrap = true
+	}
+
+	if v, err := g.SetView("completed", maxX/2+1, maxY/9+1, maxX-1, maxY-1); err != nil {
+		if err != gocui.ErrUnknownView {
+			return err
+		}
+
+		v.Title = "Completed TODOs"
+		v.Wrap = true
+	}
+
+	return nil
+}
+
+func keybindings(g *gocui.Gui) error {
+	// quit
+	if err := g.SetKeybinding("", gocui.KeyCtrlC, gocui.ModNone, quit); err != nil {
+		log.Fatalln(err)
 	}
 
 	return nil
