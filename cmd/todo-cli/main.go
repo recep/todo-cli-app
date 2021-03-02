@@ -50,9 +50,8 @@ func layout(g *gocui.Gui) error {
 		v.Highlight = true
 		v.SelBgColor = gocui.ColorGreen
 		v.SelFgColor = gocui.ColorBlack
-		fmt.Fprintln(v, "[1] Add Todo")
-		fmt.Fprintln(v, "[2] Complete Todo")
-		fmt.Fprintln(v, "[3] Delete Todo")
+		fmt.Fprintln(v, "Add Task")
+		fmt.Fprintln(v, "Exit")
 	}
 
 	if v, err := g.SetView("todos", maxX/5+1, maxY/9+1, maxX-20, maxY-1); err != nil {
@@ -61,6 +60,9 @@ func layout(g *gocui.Gui) error {
 		}
 
 		v.Title = "TODOs"
+		v.Highlight = true
+		v.SelBgColor = gocui.ColorCyan
+		v.SelFgColor = gocui.ColorWhite
 		v.Wrap = true
 	}
 
@@ -111,9 +113,12 @@ func keybindings(g *gocui.Gui) error {
 func nextView(g *gocui.Gui, v *gocui.View) error {
 	if v == nil || v.Name() != "menu" {
 		_, err := g.SetCurrentView("menu")
+		g.Cursor = false
 		return err
 	}
 	_, err := g.SetCurrentView("todos")
+	g.Cursor = true
+
 	return err
 }
 
@@ -127,7 +132,6 @@ func cursorUp(g *gocui.Gui, v *gocui.View) error {
 			}
 		}
 	}
-
 	return nil
 }
 
