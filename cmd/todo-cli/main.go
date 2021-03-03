@@ -53,7 +53,7 @@ func layout(g *gocui.Gui) error {
 		v.SelBgColor = gocui.ColorGreen
 		v.SelFgColor = gocui.ColorBlack
 		fmt.Fprintln(v, "Add Task")
-		fmt.Fprintln(v,"Exit")
+		fmt.Fprintln(v, "Exit")
 	}
 
 	if v, err := g.SetView("todos", maxX/5+1, maxY/9+1, maxX-20, maxY-1); err != nil {
@@ -136,6 +136,10 @@ func getLine(g *gocui.Gui, v *gocui.View) error {
 		log.Fatalln(err)
 	}
 
+	if str == "Exit" {
+		return gocui.ErrQuit
+	}
+
 	maxX, maxY := g.Size()
 	if v, err := g.SetView("msg", maxX/2-30, maxY/2, maxX/2+30, maxY/2+2); err != nil {
 		if err != gocui.ErrUnknownView {
@@ -147,14 +151,8 @@ func getLine(g *gocui.Gui, v *gocui.View) error {
 		if _, err := g.SetCurrentView("msg"); err != nil {
 			return err
 		}
-
-		switch str {
-		case "Add Task":
-			index = 1
-		case "Exit":
-			index = 2
-		}
 	}
+
 	return nil
 }
 
