@@ -6,6 +6,8 @@ import (
 	"log"
 )
 
+var index int
+
 func main() {
 	g, err := gocui.NewGui(gocui.OutputNormal)
 	if err != nil {
@@ -51,7 +53,7 @@ func layout(g *gocui.Gui) error {
 		v.SelBgColor = gocui.ColorGreen
 		v.SelFgColor = gocui.ColorBlack
 		fmt.Fprintln(v, "Add Task")
-		fmt.Fprintln(v, "Exit")
+		fmt.Fprintln(v,"Exit")
 	}
 
 	if v, err := g.SetView("todos", maxX/5+1, maxY/9+1, maxX-20, maxY-1); err != nil {
@@ -89,6 +91,11 @@ func keybindings(g *gocui.Gui) error {
 		return err
 	}
 
+	// Edit
+	if err := g.SetKeybinding("menu", gocui.KeyEnter, gocui.ModNone, getLine); err != nil {
+		return err
+	}
+
 	// Next view
 	if err := g.SetKeybinding("", gocui.KeyTab, gocui.ModNone, nextView); err != nil {
 		return err
@@ -120,6 +127,35 @@ func nextView(g *gocui.Gui, v *gocui.View) error {
 	g.Cursor = true
 
 	return err
+}
+
+func getLine(g *gocui.Gui, v *gocui.View) error {
+	_, cy := v.Cursor()
+	str, err := v.Line(cy)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	maxX, maxY := g.Size()
+	if v, err := g.SetView("msg", maxX/2-30, maxY/2, maxX/2+30, maxY/2+2); err != nil {
+		if err != gocui.ErrUnknownView {
+			return err
+		}
+
+		v.Editable = true
+
+		if _, err := g.SetCurrentView("msg"); err != nil {
+			return err
+		}
+
+		switch str {
+		case "Add Task":
+			index = 1
+		case "Exit":
+			index = 2
+		}
+	}
+	return nil
 }
 
 func cursorUp(g *gocui.Gui, v *gocui.View) error {
