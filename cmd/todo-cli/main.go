@@ -6,8 +6,6 @@ import (
 	"log"
 )
 
-var index int
-
 func main() {
 	g, err := gocui.NewGui(gocui.OutputNormal)
 	if err != nil {

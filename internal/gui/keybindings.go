@@ -7,18 +7,23 @@ import (
 
 // Keybindings
 func Keybindings(g *gocui.Gui) error {
-	// Key Arrow Down
-	if err := g.SetKeybinding("menu", gocui.KeyArrowDown, gocui.ModNone, cursorDown); err != nil {
+	// Key Arrow Down menu and todoView
+	if err := g.SetKeybinding("", gocui.KeyArrowDown, gocui.ModNone, cursorDown); err != nil {
 		return err
 	}
 
-	// Key Arrow Up
-	if err := g.SetKeybinding("menu", gocui.KeyArrowUp, gocui.ModNone, cursorUp); err != nil {
+	// Key Arrow Up menu and todoView
+	if err := g.SetKeybinding("", gocui.KeyArrowUp, gocui.ModNone, cursorUp); err != nil {
 		return err
 	}
 
 	// Edit
 	if err := g.SetKeybinding("menu", gocui.KeyEnter, gocui.ModNone, getLine); err != nil {
+		return err
+	}
+
+	// Save
+	if err := g.SetKeybinding("msg", gocui.KeyEnter, gocui.ModNone, save); err != nil {
 		return err
 	}
 
