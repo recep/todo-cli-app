@@ -1,6 +1,7 @@
 package gui
 
 import (
+	"fmt"
 	"github.com/jroimartin/gocui"
 	"github.com/recep/todo-cli-app/internal/app"
 	"log"
@@ -39,6 +40,28 @@ func getLineMenu(g *gocui.Gui, v *gocui.View) error {
 		g.Cursor = true
 
 		if _, err := g.SetCurrentView("msg"); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func getOptions(g *gocui.Gui, v *gocui.View) error {
+	maxX, maxY := g.Size()
+	if oV, err := g.SetView("options", maxX/5+15, maxY/9+5, maxX/3+5, maxY/9+10); err != nil {
+		if err != gocui.ErrUnknownView {
+			return err
+		}
+
+		oV.Highlight = true
+		oV.SelBgColor = gocui.ColorGreen
+		oV.SelFgColor = gocui.ColorBlack
+		oV.Wrap = true
+		fmt.Fprintln(oV, "Complete")
+		fmt.Fprintln(oV, "Delete")
+
+		if _, err := g.SetCurrentView("options"); err != nil {
 			return err
 		}
 	}

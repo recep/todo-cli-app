@@ -6,9 +6,9 @@ import (
 	"strings"
 )
 
-func SaveDataToFile(data string) error {
+func SaveDataToFile(data, path string) error {
 	// This code appends string to the file "todos.txt". It creates the file if it does not already exist.
-	f, err := os.OpenFile("./storage/todos.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	f, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		return err
 	}

@@ -27,6 +27,11 @@ func Keybindings(g *gocui.Gui) error {
 		return err
 	}
 
+	// Get options
+	if err := g.SetKeybinding("todos", gocui.KeyEnter, gocui.ModNone, getOptions); err != nil {
+		return err
+	}
+
 	// Next view
 	if err := g.SetKeybinding("", gocui.KeyTab, gocui.ModNone, nextView); err != nil {
 		return err

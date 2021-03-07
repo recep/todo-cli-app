@@ -13,7 +13,7 @@ func AddTodo(str string, v *gocui.View) error {
 	fmt.Fprintln(v,str)
 
 	// Save task to txt file
-	if err := utils.SaveDataToFile(str); err != nil {
+	if err := utils.SaveDataToFile(str,"./storage/todos.txt"); err != nil {
 		return err
 	}
 
