@@ -15,6 +15,10 @@ func main() {
 	}
 	defer g.Close()
 
+	// Active Layout Highlighting
+	g.Highlight = true
+	g.SelFgColor = gocui.ColorGreen
+
 	// Setup layout and keybindings
 	g.SetManagerFunc(gui.Layout)
 	if err := gui.Keybindings(g); err != nil {
