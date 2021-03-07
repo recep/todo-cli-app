@@ -13,6 +13,7 @@ func nextView(g *gocui.Gui, v *gocui.View) error {
 		return err
 	}
 	_, err := g.SetCurrentView("todos")
+	g.Cursor = false
 
 	return err
 }
@@ -35,6 +36,7 @@ func getLine(g *gocui.Gui, v *gocui.View) error {
 		}
 
 		msgV.Editable = true
+		g.Cursor = true
 
 		if _, err := g.SetCurrentView("msg"); err != nil {
 			return err
@@ -57,6 +59,7 @@ func save(g *gocui.Gui, v *gocui.View) error {
 	if err := g.DeleteView("msg"); err != nil {
 		return err
 	}
+	g.Cursor = false
 
 	// Change current view to menu
 	if _, err := g.SetCurrentView("menu"); err != nil {
