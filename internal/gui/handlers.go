@@ -18,7 +18,7 @@ func nextView(g *gocui.Gui, v *gocui.View) error {
 	return err
 }
 
-func getLine(g *gocui.Gui, v *gocui.View) error {
+func getLineMenu(g *gocui.Gui, v *gocui.View) error {
 	_, cy := v.Cursor()
 	str, err := v.Line(cy)
 	if err != nil {

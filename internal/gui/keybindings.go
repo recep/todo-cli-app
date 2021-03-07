@@ -18,7 +18,7 @@ func Keybindings(g *gocui.Gui) error {
 	}
 
 	// Edit
-	if err := g.SetKeybinding("menu", gocui.KeyEnter, gocui.ModNone, getLine); err != nil {
+	if err := g.SetKeybinding("menu", gocui.KeyEnter, gocui.ModNone, getLineMenu); err != nil {
 		return err
 	}
 
