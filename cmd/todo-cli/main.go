@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"github.com/jroimartin/gocui"
 	"github.com/recep/todo-cli-app/internal/gui"
+	"github.com/recep/todo-cli-app/internal/utils"
 	"log"
 )
 
@@ -13,11 +15,30 @@ func main() {
 	}
 	defer g.Close()
 
+	// Setup layout and keybindings
 	g.SetManagerFunc(gui.Layout)
-
 	if err := gui.Keybindings(g); err != nil {
 		log.Fatal(err)
 	}
+
+	// Get todos from the file
+	todos, err := utils.ReadData("./storage/todos.txt")
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	// Write todos
+	g.Update(func(g *gocui.Gui) error {
+		tView, err := g.View("todos")
+		if err != nil {
+			return err
+		}
+
+		for _, todo := range todos {
+			fmt.Fprintln(tView, todo)
+		}
+		return nil
+	})
 
 	// MainLoop
 	if err := g.MainLoop(); err != nil && err != gocui.ErrQuit {

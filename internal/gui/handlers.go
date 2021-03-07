@@ -13,7 +13,6 @@ func nextView(g *gocui.Gui, v *gocui.View) error {
 		return err
 	}
 	_, err := g.SetCurrentView("todos")
-	g.Cursor = true
 
 	return err
 }

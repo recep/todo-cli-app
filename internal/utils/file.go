@@ -3,6 +3,7 @@ package utils
 import (
 	"log"
 	"os"
+	"strings"
 )
 
 func SaveDataToFile(data string) error {
@@ -20,4 +21,15 @@ func SaveDataToFile(data string) error {
 	}
 
 	return nil
+}
+
+func ReadData(path string) ([]string, error) {
+	bytes, err := os.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+
+	s := strings.Split(string(bytes), "\n")
+
+	return s, err
 }
