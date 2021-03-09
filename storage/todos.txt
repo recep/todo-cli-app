@@ -1,2 +1,1 @@
-Learn Go
-Learn Data Structures and Algorithms
+Learn GO.Learn JS.Do exercise.

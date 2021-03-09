@@ -54,6 +54,8 @@ func Layout(g *gocui.Gui) error {
 
 		v.Title = "Completed TODOs"
 		v.Wrap = true
+
+		fmt.Fprintln(v,"Coming Soon...")
 	}
 
 	return nil
