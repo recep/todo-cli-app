@@ -33,6 +33,9 @@ func main() {
 
 	// Write todos
 	g.Update(func(g *gocui.Gui) error {
+		// Set current view
+		g.SetCurrentView("menu")
+
 		tView, err := g.View("todos")
 		if err != nil {
 			return err
