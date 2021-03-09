@@ -19,7 +19,7 @@ func Layout(g *gocui.Gui) error {
 		v.BgColor = gocui.ColorBlue
 		v.Wrap = true
 		v.Autoscroll = true
-		fmt.Fprint(v, "GO TODO CLI APP\nv.0.0.1")
+		fmt.Fprint(v, "GO TODO CLI APP\nv.0.5.0")
 	}
 
 	if v, err := g.SetView("menu", 0, maxY/9+1, maxX/5, maxY/3); err != nil {
@@ -56,6 +56,18 @@ func Layout(g *gocui.Gui) error {
 		v.Wrap = true
 
 		fmt.Fprintln(v,"Coming Soon...")
+	}
+
+	if v, err := g.SetView("keyshortcuts",0,maxY/3+1,maxX/5,maxY/2) ; err != nil {
+		if err != gocui.ErrUnknownView {
+			return err
+		}
+
+			v.Title = "Key Shortcuts"
+
+			fmt.Fprintln(v,"TAB - Switch tabs")
+			fmt.Fprintln(v,"CTRL+S - Complete Current Todo")
+			fmt.Fprintln(v,"CTRL+C - Exit")
 	}
 
 	return nil
