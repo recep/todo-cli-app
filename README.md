@@ -1,2 +1,7 @@
-# todo-cli-app
-Go todo cli app
+# GO-TODO-CLI APP
+Go Todo-CLI App 
+
+### RUN
+```
+go run cmd/todo-cli/main.go
+```

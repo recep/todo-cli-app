@@ -1,8 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/jroimartin/gocui"
+	"github.com/recep/todo-cli-app/internal/app"
 	"github.com/recep/todo-cli-app/internal/gui"
 	"github.com/recep/todo-cli-app/internal/utils"
 	"log"
@@ -26,8 +28,13 @@ func main() {
 	}
 
 	// Get todos from the file
-	todos, err := utils.ReadData("./storage/todos.txt")
+	bytes, err := utils.ReadData("./storage/todos.json")
 	if err != nil {
+		log.Fatalln(err)
+	}
+
+	var todos []app.Todo
+	if err := json.Unmarshal(bytes,&todos) ; err != nil {
 		log.Fatalln(err)
 	}
 
@@ -42,7 +49,7 @@ func main() {
 		}
 
 		for _, todo := range todos {
-			fmt.Fprintln(tView, todo)
+			fmt.Fprintln(tView, todo.Task)
 		}
 		return nil
 	})
