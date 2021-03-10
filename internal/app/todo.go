@@ -24,14 +24,8 @@ func AddTodo(str string, v *gocui.View) error {
 		Completed: false,
 	}
 
-	// Read data from the file
-	data, err := utils.ReadData("./storage/tasks.json")
+	todos, err := GetAllTodos()
 	if err != nil {
-		return err
-	}
-
-	var todos []Todo
-	if err := json.Unmarshal(data, &todos); err != nil {
 		return err
 	}
 
@@ -49,6 +43,22 @@ func AddTodo(str string, v *gocui.View) error {
 	return nil
 }
 
-func CompleteTodo(todo string) error {
+func CompleteTask(todo string) error {
+
 	return nil
+}
+
+func GetAllTodos() ([]Todo, error) {
+	// Read data from the file
+	data, err := utils.ReadData("./storage/tasks.json")
+	if err != nil {
+		return nil, err
+	}
+
+	var todos []Todo
+	if err := json.Unmarshal(data, &todos); err != nil {
+		return nil, err
+	}
+
+	return todos, err
 }

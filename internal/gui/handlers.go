@@ -7,8 +7,6 @@ import (
 	"log"
 )
 
-var todoText string
-
 func nextView(g *gocui.Gui, v *gocui.View) error {
 	if v == nil || v.Name() != "menu" {
 		_, err := g.SetCurrentView("menu")
@@ -50,14 +48,6 @@ func getLineMenu(g *gocui.Gui, v *gocui.View) error {
 }
 
 func getOptions(g *gocui.Gui, v *gocui.View) error {
-	_, cy := v.Cursor()
-	str, err := v.Line(cy)
-	if err != nil {
-		return err
-	}
-
-	todoText = str
-
 	maxX, maxY := g.Size()
 	if oV, err := g.SetView("options", maxX/5+15, maxY/9+5, maxX/3+10, maxY/9+10); err != nil {
 		if err != gocui.ErrUnknownView {
@@ -82,13 +72,13 @@ func getOptions(g *gocui.Gui, v *gocui.View) error {
 func completeTask(g *gocui.Gui, v *gocui.View) error {
 	// Get string of the line
 	_, cy := v.Cursor()
-	todo, err := v.Line(cy)
+	task, err := v.Line(cy)
 	if err != nil {
 		return err
 	}
 
 	// Complete task
-	if err := app.CompleteTodo(todo); err != nil {
+	if err := app.CompleteTask(task); err != nil {
 		return err
 	}
 
