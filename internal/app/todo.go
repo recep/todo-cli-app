@@ -25,7 +25,7 @@ func AddTodo(str string, v *gocui.View) error {
 	}
 
 	// Read data from the file
-	data, err := utils.ReadData("./storage/todos.json")
+	data, err := utils.ReadData("./storage/tasks.json")
 	if err != nil {
 		return err
 	}
@@ -42,7 +42,7 @@ func AddTodo(str string, v *gocui.View) error {
 		return err
 	}
 
-	if err := utils.SaveDataToFile(bytes, "./storage/todos.json"); err != nil {
+	if err := utils.SaveDataToFile(bytes, "./storage/tasks.json"); err != nil {
 		return err
 	}
 

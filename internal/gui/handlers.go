@@ -15,7 +15,7 @@ func nextView(g *gocui.Gui, v *gocui.View) error {
 		g.Cursor = false
 		return err
 	}
-	_, err := g.SetCurrentView("todos")
+	_, err := g.SetCurrentView("tasks")
 	g.Cursor = false
 
 	return err
@@ -116,7 +116,7 @@ func save(g *gocui.Gui, v *gocui.View) error {
 	}
 
 	// Get todos view
-	todos, err := g.View("todos")
+	todos, err := g.View("tasks")
 	if err != nil {
 		return err
 	}

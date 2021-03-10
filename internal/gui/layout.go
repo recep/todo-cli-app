@@ -35,7 +35,7 @@ func Layout(g *gocui.Gui) error {
 		fmt.Fprintln(v, "Exit")
 	}
 
-	if v, err := g.SetView("todos", maxX/5+1, maxY/9+1, maxX-20, maxY-1); err != nil {
+	if v, err := g.SetView("tasks", maxX/5+1, maxY/9+1, maxX-20, maxY-1); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -52,7 +52,7 @@ func Layout(g *gocui.Gui) error {
 			return err
 		}
 
-		v.Title = "Completed TODOs"
+		v.Title = "Completed Tasks"
 		v.Wrap = true
 
 	}
@@ -65,7 +65,7 @@ func Layout(g *gocui.Gui) error {
 			v.Title = "Key Shortcuts"
 
 			fmt.Fprintln(v,"TAB - Switch tabs")
-			fmt.Fprintln(v,"CTRL+S - Complete Current Todo")
+			fmt.Fprintln(v,"CTRL+S - Complete Current Task")
 			fmt.Fprintln(v,"CTRL+C - Exit")
 	}
 

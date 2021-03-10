@@ -28,7 +28,7 @@ func main() {
 	}
 
 	// Get todos from the file
-	bytes, err := utils.ReadData("./storage/todos.json")
+	bytes, err := utils.ReadData("./storage/tasks.json")
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -43,7 +43,7 @@ func main() {
 		// Set current view
 		g.SetCurrentView("menu")
 
-		tView, err := g.View("todos")
+		tView, err := g.View("tasks")
 		if err != nil {
 			return err
 		}
