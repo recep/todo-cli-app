@@ -34,7 +34,7 @@ func main() {
 	}
 
 	var todos []app.Todo
-	if err := json.Unmarshal(bytes,&todos) ; err != nil {
+	if err := json.Unmarshal(bytes, &todos); err != nil {
 		log.Fatalln(err)
 	}
 
@@ -48,7 +48,17 @@ func main() {
 			return err
 		}
 
+		cView, err := g.View("completed")
+		if err != nil {
+			return err
+		}
+
 		for _, todo := range todos {
+			if todo.Completed {
+				fmt.Fprintln(cView, todo.Task)
+				continue
+			}
+
 			fmt.Fprintln(tView, todo.Task)
 		}
 		return nil

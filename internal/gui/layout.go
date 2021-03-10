@@ -55,7 +55,6 @@ func Layout(g *gocui.Gui) error {
 		v.Title = "Completed TODOs"
 		v.Wrap = true
 
-		fmt.Fprintln(v,"Coming Soon...")
 	}
 
 	if v, err := g.SetView("keyshortcuts",0,maxY/3+1,maxX/5,maxY/2) ; err != nil {
