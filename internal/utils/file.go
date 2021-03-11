@@ -5,7 +5,12 @@ import (
 )
 
 func SaveDataToFile(data []byte, path string) error {
-	// This code appends string to the file "tasks.json". It creates the file if it does not already exist.
+	// TODO refactor and fix end of line error
+	if err := os.Remove(path) ; err != nil {
+		return err
+	}
+
+	// Open json file
 	f, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		return err

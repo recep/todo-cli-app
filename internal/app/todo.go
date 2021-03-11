@@ -29,7 +29,7 @@ func AddTodo(str string, v *gocui.View) error {
 		return err
 	}
 
-	todos = append(todos, todo)
+	todos = append(todos, &todo)
 
 	bytes, err := json.MarshalIndent(todos, "", " ")
 	if err != nil {
@@ -44,18 +44,38 @@ func AddTodo(str string, v *gocui.View) error {
 }
 
 func CompleteTask(todo string) error {
+	// Get all todos from the json file
+	todos, err := GetAllTodos()
+	if err != nil {
+		return err
+	}
+
+	for _, t := range todos {
+		if t.Task == todo {
+			t.Completed = true
+		}
+	}
+
+	bytes, err := json.MarshalIndent(todos, "", " ")
+	if err != nil {
+		return err
+	}
+
+	if err := utils.SaveDataToFile(bytes, "./storage/tasks.json"); err != nil {
+		return err
+	}
 
 	return nil
 }
 
-func GetAllTodos() ([]Todo, error) {
+func GetAllTodos() ([]*Todo, error) {
 	// Read data from the file
 	data, err := utils.ReadData("./storage/tasks.json")
 	if err != nil {
 		return nil, err
 	}
 
-	var todos []Todo
+	var todos []*Todo
 	if err := json.Unmarshal(data, &todos); err != nil {
 		return nil, err
 	}
