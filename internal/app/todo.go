@@ -16,7 +16,6 @@ func AddTodo(str string, v *gocui.View) error {
 	v.SelBgColor = gocui.ColorGreen
 	v.SelFgColor = gocui.ColorBlack
 	v.Wrap = true
-	fmt.Fprintln(v, str)
 
 	// Create new model
 	todo := Todo{
@@ -37,6 +36,10 @@ func AddTodo(str string, v *gocui.View) error {
 	}
 
 	if err := utils.SaveDataToFile(bytes, "./storage/tasks.json"); err != nil {
+		return err
+	}
+
+	if err := RefreshTasksView(v); err != nil {
 		return err
 	}
 
@@ -81,4 +84,52 @@ func GetAllTodos() ([]*Todo, error) {
 	}
 
 	return todos, err
+}
+
+// Refresh tasks view
+func RefreshTasksView(v *gocui.View) error {
+	// Get all tasks
+	todos, err := GetAllTodos()
+	if err != nil {
+		return err
+	}
+
+	// Clear view
+	v.Clear()
+	v.SelBgColor = gocui.ColorWhite
+	v.SelFgColor = gocui.ColorBlack
+
+	// Write tasks line by line
+	for _, todo := range todos {
+		if todo.Completed {
+			continue
+		}
+
+		fmt.Fprintln(v, todo.Task)
+	}
+
+	return nil
+}
+
+// Refresh completed view
+func RefreshCompletedView(v *gocui.View) error {
+	// Get all tasks
+	todos, err := GetAllTodos()
+	if err != nil {
+		return err
+	}
+
+	// Clear view
+	v.Clear()
+
+	// Write tasks line by line
+	for _, todo := range todos {
+		if !todo.Completed {
+			continue
+		}
+
+		fmt.Fprintln(v, todo.Task)
+	}
+
+	return nil
 }

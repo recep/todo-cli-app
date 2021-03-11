@@ -82,6 +82,21 @@ func completeTask(g *gocui.Gui, v *gocui.View) error {
 		return err
 	}
 
+	// Refresh view
+	if err := app.RefreshTasksView(v); err != nil {
+		return err
+	}
+
+	// Get completedView
+	gV, err := g.View("completed")
+	if err != nil {
+		return err
+	}
+
+	if err := app.RefreshCompletedView(gV); err != nil {
+		return err
+	}
+
 	return nil
 }
 

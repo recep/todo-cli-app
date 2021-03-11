@@ -29,7 +29,7 @@ func Layout(g *gocui.Gui) error {
 
 		v.Title = "Menu"
 		v.Highlight = true
-		v.SelBgColor = gocui.ColorGreen
+		v.SelBgColor = gocui.ColorBlue
 		v.SelFgColor = gocui.ColorBlack
 		fmt.Fprintln(v, "Add Task")
 		fmt.Fprintln(v, "Exit")
@@ -42,8 +42,8 @@ func Layout(g *gocui.Gui) error {
 
 		v.Title = "TODOs"
 		v.Highlight = true
-		v.SelBgColor = gocui.ColorCyan
-		v.SelFgColor = gocui.ColorWhite
+		v.SelBgColor = gocui.ColorWhite
+		v.SelFgColor = gocui.ColorBlack
 		v.Wrap = true
 	}
 
