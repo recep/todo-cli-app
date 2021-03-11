@@ -33,7 +33,7 @@ func Keybindings(g *gocui.Gui) error {
 	}
 
 	// Complete task
-	if err := g.SetKeybinding("tasks",gocui.KeyCtrlS,gocui.ModNone,completeTask) ; err != nil {
+	if err := g.SetKeybinding("tasks", gocui.KeyCtrlS, gocui.ModNone, completeTask); err != nil {
 		return err
 	}
 
